@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tech4You - Portfolio di opportunità climate-tech per investitori. 120 tecnologie pre-screened con €110M già investiti.">
+  <title>Tech4You | Opportunità per Investitori</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Page-specific styles for Investor landing */
+    .page-header {
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%);
+      color: var(--white);
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .investor-stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .footer-institutional {
+      display: flex;
+      justify-content: center;
+      margin: var(--space-md) 0;
+    }
+
+    .investor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(255,255,255,0.15);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+    }
+
+    .investor-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .investor-stat {
+      text-align: center;
+    }
+
+    .investor-stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .investor-stat-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .why-section {
+      padding: var(--space-xxl) 0;
+      background: var(--white);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    @media (max-width: 768px) {
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .why-card {
+      background: var(--light);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .why-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .portfolio-section {
+      padding: var(--space-xxl) 0;
+      background: var(--light);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portfolio-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .portfolio-header {
+      padding: var(--space-md) var(--space-lg);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .portfolio-header.energy { background: linear-gradient(135deg, var(--spoke-1), #6ab06a); }
+    .portfolio-header.circular { background: linear-gradient(135deg, var(--spoke-2), #4aa88a); }
+    .portfolio-header.climate { background: linear-gradient(135deg, var(--spoke-3), #2a9ba2); }
+    .portfolio-header.agrifood { background: linear-gradient(135deg, var(--spoke-4), #007799); }
+    .portfolio-header.cultural { background: linear-gradient(135deg, var(--spoke-5), #0a7182); }
+    .portfolio-header.health { background: linear-gradient(135deg, var(--spoke-6), #055566); }
+
+    .portfolio-cluster {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .portfolio-cluster-icon {
+      font-size: 1.5rem;
+    }
+
+    .portfolio-cluster-name {
+      font-weight: 700;
+    }
+
+    .portfolio-count {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .portfolio-body {
+      padding: var(--space-lg);
+    }
+
+    .portfolio-highlights {
+      margin-bottom: var(--space-md);
+    }
+
+    .portfolio-highlight {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      font-size: 0.9375rem;
+    }
+
+    .portfolio-highlight-icon {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .portfolio-metrics {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-md);
+    }
+
+    .portfolio-metric {
+      background: var(--light);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--dark-soft);
+    }
+
+    .portfolio-demo {
+      background: var(--light);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--primary);
+    }
+
+    .portfolio-demo-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--dark-soft);
+      margin-bottom: 4px;
+    }
+
+    .portfolio-demo-name {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .portfolio-demo-trl {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      margin-left: var(--space-xs);
+    }
+
+    .process-section {
+      padding: var(--space-xxl) 0;
+      background: var(--white);
+    }
+
+    .process-steps {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .process-step {
+      text-align: center;
+      max-width: 200px;
+      position: relative;
+    }
+
+    .process-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -30px;
+      top: 30px;
+      font-size: 1.5rem;
+      color: var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .process-step:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    .process-number {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 auto var(--space-md);
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%);
+      color: var(--white);
+      padding: var(--space-xxl) 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .cta-box-investor {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      max-width: 600px;
+      margin: var(--space-xl) auto 0;
+      text-align: left;
+    }
+
+    .cta-box-investor h3 {
+      color: var(--dark);
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+
+    .cta-features-investor {
+      list-style: none;
+      margin-bottom: var(--space-lg);
+    }
+
+    .cta-features-investor li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      color: var(--dark);
+    }
+
+    .cta-features-investor li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .urgency-box {
+      background: rgba(251, 233, 27, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+
+    .urgency-box p {
+      margin: 0;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    .urgency-highlight {
+      color: var(--primary);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="landing-step1.html" class="navbar-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 40px;">
+        </a>
+        <a href="#cta-section" class="btn btn-dark">Richiedi Briefing</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================
+       PAGE HEADER
+       ======================================== -->
+  <header class="page-header">
+    <div class="container">
+      <span class="investor-badge">
+        💼 Accesso Investitori
+      </span>
+      <h1>Esplora il portfolio climate-tech più ricco del Sud Italia</h1>
+      <p style="opacity: 0.9; max-width: 700px; margin: 0 auto;">
+        120 tecnologie sviluppate da 433 ricercatori d'eccellenza, con €110M di investimento PNRR.
+        Naviga le opportunità, scopri il potenziale, identifica i deal più interessanti per il tuo mandato.
+      </p>
+
+      <div class="investor-stats">
+        <div class="investor-stat">
+          <div class="investor-stat-number">€110M</div>
+          <div class="investor-stat-label">Già investiti</div>
+        </div>
+        <div class="investor-stat">
+          <div class="investor-stat-number">120</div>
+          <div class="investor-stat-label">Tecnologie TRL 6-9</div>
+        </div>
+        <div class="investor-stat">
+          <div class="investor-stat-number">65</div>
+          <div class="investor-stat-label">Brevetti identificati</div>
+        </div>
+        <div class="investor-stat">
+          <div class="investor-stat-number">€120B</div>
+          <div class="investor-stat-label">Funding pipeline</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================
+       WHY TECH4YOU
+       ======================================== -->
+  <section class="why-section">
+    <div class="container">
+      <div class="text-center">
+        <h2>Perché Tech4You per gli investitori?</h2>
+        <p class="text-muted">Accesso privilegiato a deal flow esclusivo Sud Italia</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🔬</div>
+          <h4>Pre-screening rigoroso</h4>
+          <p class="text-muted">Ogni tecnologia è già validata in ambiente operativo (TRL 6-9) da team di ricerca di eccellenza. Zero early-stage risk.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <h4>Co-investment pubblico</h4>
+          <p class="text-muted">€120B di fondi pubblici disponibili (PNRR, Horizon, PON) moltiplicano il tuo investimento con leva significativa.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🤝</div>
+          <h4>Deal flow esclusivo</h4>
+          <p class="text-muted">Accesso diretto a opportunità non ancora sul mercato. Intro ai team, IP status, due diligence kit incluso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       PORTFOLIO OVERVIEW
+       ======================================== -->
+  <section class="portfolio-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2>Portfolio per cluster tematico</h2>
+        <p class="text-muted">6 aree di investimento, 120 tecnologie, 30 sfide industriali risolte</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- ENERGY -->
+        <div class="portfolio-card">
+          <div class="portfolio-header energy">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">⚡</span>
+              <span class="portfolio-cluster-name">Energy</span>
+            </div>
+            <span class="portfolio-count">25 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Ottimizzazione FV con AI (+8-12% resa)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Storage ibrido batterie + idrogeno</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Wave energy converter (35% efficienza)</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 6-7</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                SMPPT AI Algorithm
+                <span class="portfolio-demo-trl">TRL 7</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CIRCULAR -->
+        <div class="portfolio-card">
+          <div class="portfolio-header circular">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">♻️</span>
+              <span class="portfolio-cluster-name">Circular Economy</span>
+            </div>
+            <span class="portfolio-count">27 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Riciclo batterie Li (>90% recupero)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Valorizzazione CO2 da biogas</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Marine drone microplastiche</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 7-8</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                Lithium Battery Recycling Plant
+                <span class="portfolio-demo-trl">TRL 8</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLIMATE -->
+        <div class="portfolio-card">
+          <div class="portfolio-header climate">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">🌍</span>
+              <span class="portfolio-cluster-name">Climate Risk</span>
+            </div>
+            <span class="portfolio-count">26 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Early warning alluvioni (6-12h anticipo)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Fire detection AI (5 min vs 30)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Structural monitoring ponti</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 6-7</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                Hypes - HYdro Prediction Engine
+                <span class="portfolio-demo-trl">TRL 7</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AGRIFOOD -->
+        <div class="portfolio-card">
+          <div class="portfolio-header agrifood">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">🌾</span>
+              <span class="portfolio-cluster-name">AgriFood</span>
+            </div>
+            <span class="portfolio-count">15 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Precision irrigation (-50% acqua)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Blockchain tracciabilità filiera</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Valorizzazione scarti agrumi</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 6-7</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                WoodTrace 4.0 Blockchain
+                <span class="portfolio-demo-trl">TRL 7</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CULTURAL -->
+        <div class="portfolio-card">
+          <div class="portfolio-header cultural">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">🏛️</span>
+              <span class="portfolio-cluster-name">Cultural Heritage</span>
+            </div>
+            <span class="portfolio-count">17 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>XR platform musei e siti</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>AI itinerari turistici</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Documentazione archeologica mobile</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 7-9</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                ARCHEOrecords App
+                <span class="portfolio-demo-trl">TRL 9</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HEALTH -->
+        <div class="portfolio-card">
+          <div class="portfolio-header health">
+            <div class="portfolio-cluster">
+              <span class="portfolio-cluster-icon">🧬</span>
+              <span class="portfolio-cluster-name">Health & Wellness</span>
+            </div>
+            <span class="portfolio-count">8 tech</span>
+          </div>
+          <div class="portfolio-body">
+            <div class="portfolio-highlights">
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Nutraceutici da scarti (12 formulazioni)</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Dermocosmetici funzionali</span>
+              </div>
+              <div class="portfolio-highlight">
+                <span class="portfolio-highlight-icon">→</span>
+                <span>Brain-Computer Interface</span>
+              </div>
+            </div>
+            <div class="portfolio-metrics">
+              <span class="portfolio-metric">5 sfide risolte</span>
+              <span class="portfolio-metric">TRL 6-8</span>
+            </div>
+            <div class="portfolio-demo">
+              <p class="portfolio-demo-label">Demo flagship</p>
+              <p class="portfolio-demo-name">
+                Nutraceutical Product Line
+                <span class="portfolio-demo-trl">TRL 8</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       PROCESS SECTION
+       ======================================== -->
+  <section class="process-section">
+    <div class="container">
+      <div class="text-center">
+        <h2>Il percorso per gli investitori</h2>
+        <p class="text-muted">Accesso strutturato in 4 step</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <h4>Briefing</h4>
+          <p class="text-muted">30 min call per capire i tuoi criteri di investimento</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <h4>Shortlist</h4>
+          <p class="text-muted">5-10 tecnologie matchate con i tuoi criteri</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <h4>Deep dive</h4>
+          <p class="text-muted">Schede tecniche, IP status, intro ai team</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <h4>Deal</h4>
+          <p class="text-muted">Due diligence e strutturazione investimento</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       CTA SECTION
+       ======================================== -->
+  <section class="cta-section" id="cta-section">
+    <div class="container">
+      <h2>Inizia a esplorare le opportunità</h2>
+      <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">
+        Una call conoscitiva di 10 minuti per capire il tuo focus di investimento
+        e identificare le tecnologie più interessanti per il tuo mandato.
+      </p>
+
+      <div class="cta-box-investor">
+        <h3>💼 Call Conoscitiva Investitori</h3>
+
+        <ul class="cta-features-investor">
+          <li>Parliamo del tuo focus di investimento</li>
+          <li>Ti presentiamo le opportunità più rilevanti</li>
+          <li>Valutiamo insieme i prossimi passi</li>
+          <li>Nessun impegno, solo valore</li>
+        </ul>
+
+        <div class="urgency-box">
+          <p>
+            <span class="urgency-highlight">433 ricercatori, 65 brevetti, €110M investiti.</span>
+            Il più grande ecosistema climate-tech del Sud Italia a portata di call.
+          </p>
+        </div>
+
+        <a href="#" class="btn btn-dark btn-lg btn-block" id="cta-briefing">
+          Prenota la tua call
+        </a>
+
+        <p style="text-align: center; margin-top: var(--space-md); font-size: 0.875rem; color: var(--dark-soft);">
+          10 minuti | Gratuito | Senza impegno
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       EVENT INFO BANNER
+       ======================================== -->
+  <section class="event-banner" style="padding: var(--space-lg) 0;">
+    <div class="container">
+      <div class="event-content">
+        <div class="event-date">
+          <div class="event-date-month">Feb</div>
+          <div class="event-date-day">2026</div>
+        </div>
+        <div class="event-info">
+          <h3>Tech4You Climate Innovation Day</h3>
+          <p class="event-location">📍 Milano Bicocca | Mezza giornata + Networking Lunch</p>
+          <p class="event-description" style="margin-bottom: 0;">
+            Chi completa il briefing avrà <strong>accesso prioritario</strong> all'evento con demo live,
+            convergence panel e speed matching facilitato.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 45px; filter: brightness(1.2);">
+        </div>
+        <div class="footer-institutional">
+          <img src="images/loghi-istituzionali.png" alt="Partner istituzionali - PNRR, NextGenerationEU, CNR, Università" style="height: 40px; filter: brightness(1.3);">
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Contatti</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tech4You S.c.a.r.l. - Ecosistema dell'Innovazione Sostenibile</p>
+        <p>Via P. Bucci, snc - 87036 Rende (CS), Italia</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <script>
+    // CTA click handler
+    document.getElementById('cta-briefing').addEventListener('click', function(e) {
+      e.preventDefault();
+      // Replace with your Calendly/HubSpot link for investor briefing
+      alert('Redirect to investor briefing booking');
+      // window.location.href = 'https://calendly.com/tech4you/investor-briefing';
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Track page view with investor segment
+    console.log('Investor landing page viewed');
+    // gtag('event', 'page_view', { page_type: 'investor_landing' });
+  </script>
+
+</body>
+</html>

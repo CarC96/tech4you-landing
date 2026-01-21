@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tech4You - Prenota una call gratuita per scoprire le tecnologie climate tech gia validate per la tua azienda. 120+ prototipi TRL 6-9 pronti per l'integrazione.">
+  <title>Tech4You | Prenota una Call Gratuita - Tecnologie Climate Tech</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Brand style overrides */
+    .hero {
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%) !important;
+      min-height: auto;
+      padding: 120px 0 var(--space-xl);
+    }
+    h1, .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .proof-number {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* V2 Specific Styles */
+    .hero-v2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .hero-v2 {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-form-card {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    .hero-form-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-xl);
+      color: var(--dark);
+    }
+
+    .hero-form-card h3 {
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+      font-size: 1.25rem;
+    }
+
+    .hero-form-card .form-subtitle {
+      color: var(--dark-soft);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-sm);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-group select {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      background: var(--white);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-privacy {
+      font-size: 0.75rem;
+      color: var(--dark-soft);
+      margin-top: var(--space-sm);
+      text-align: center;
+    }
+
+    .form-privacy a {
+      color: var(--primary);
+    }
+
+    /* How it works section */
+    .how-it-works {
+      padding: var(--space-xxl) 0;
+      background: var(--light);
+    }
+
+    .how-it-works-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--spoke-1));
+      z-index: 0;
+    }
+
+    @media (max-width: 768px) {
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+      .steps-grid::before {
+        display: none;
+      }
+    }
+
+    .step-card {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-md);
+      background: var(--white);
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .step-card h4 {
+      margin-bottom: var(--space-xs);
+      color: var(--dark);
+    }
+
+    .step-card p {
+      color: var(--dark-soft);
+      font-size: 0.9375rem;
+      margin-bottom: 0;
+    }
+
+    .step-duration {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-xl);
+      margin-top: var(--space-sm);
+    }
+
+    /* Benefits section */
+    .benefits {
+      padding: var(--space-xxl) 0;
+    }
+
+    .benefits-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .benefit-card {
+      display: flex;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all var(--transition-normal);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .benefit-icon {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--spoke-6));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .benefit-content h4 {
+      margin-bottom: var(--space-xs);
+    }
+
+    .benefit-content p {
+      color: var(--dark-soft);
+      font-size: 0.9375rem;
+      margin-bottom: 0;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--spoke-6) 100%);
+      color: var(--white);
+      padding: var(--space-xl) 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .cta-section p {
+      opacity: 0.9;
+      margin-bottom: var(--space-lg);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Trust logos compact */
+    .trust-logos {
+      padding: var(--space-lg) 0;
+      background: var(--white);
+    }
+
+    .trust-logos-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+    }
+
+    .trust-logos img {
+      height: 50px;
+      min-height: 50px;
+      width: auto;
+      filter: grayscale(100%);
+      opacity: 0.6;
+      transition: all var(--transition-normal);
+    }
+
+    .trust-logos img:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+    }
+
+    /* Override slider speed for trust logos */
+    .trust-logos .logo-track.track-1 {
+      animation: scroll-left 60s linear infinite;
+    }
+
+    .trust-logos .partner-logo {
+      min-height: 50px;
+      height: 60px;
+    }
+
+    .trust-label {
+      width: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dark-soft);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* Highlight text */
+    .highlight {
+      color: var(--accent);
+    }
+
+    /* Footer institutional */
+    .footer-institutional {
+      display: flex;
+      justify-content: center;
+      margin: var(--space-md) 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="#" class="navbar-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 40px;">
+        </a>
+        <a href="#prenota-call" class="btn btn-dark">Prenota una call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================
+       HERO SECTION
+       ======================================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-v2">
+        <!-- Left: Content -->
+        <div class="hero-content animate-fade-in">
+          <span class="hero-badge">Ecosistema PNRR - NextGenerationEU</span>
+          <h1 style="font-size: clamp(2rem, 5vw, 3.125rem);">4 anni di ricerca. €110M investiti. 120 tecnologie pronte.<br><span style="color: #FBE91B;">Ora cerchiamo imprese per portarle sul mercato.</span></h1>
+          <p style="opacity: 0.9; font-size: 1.05rem; margin-bottom: var(--space-md); max-width: 540px; line-height: 1.6;">
+            Tech4You e l'ecosistema ricerca del Mezzogiorno in un unico interlocutore: <strong>7 Organismi di Ricerca</strong>, <strong>120 prototipi TRL 6-9</strong> pronti per il mercato, <strong>433 ricercatori</strong> con competenze rare in climate tech. Accesso prioritario a PNRR, Horizon Europe, PON/POR Sud.
+          </p>
+          <div class="proof-bar-mini" style="display: flex; gap: var(--space-lg); margin-top: var(--space-md); flex-wrap: wrap; padding: var(--space-sm) 0; border-top: 1px solid rgba(255,255,255,0.2);">
+            <div style="text-align: left;">
+              <div style="font-size: 1.5rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif;">4 anni</div>
+              <div style="font-size: 0.75rem; opacity: 0.8;">R&D completato</div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-size: 1.5rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif;">€110M</div>
+              <div style="font-size: 0.75rem; opacity: 0.8;">Gia investiti</div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-size: 1.5rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif;">TRL 6-9</div>
+              <div style="font-size: 0.75rem; opacity: 0.8;">Pronte per test industriali</div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-size: 1.5rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif;">93</div>
+              <div style="font-size: 0.75rem; opacity: 0.8;">Imprese gia attive</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="hero-form-card animate-fade-in" id="prenota-call">
+          <h3>Prenota una call con il nostro team</h3>
+          <p class="form-subtitle">30 minuti per capire come la tua azienda puo trarre il massimo da 4 anni di ricerca, 120 tecnologie e i fondi disponibili.</p>
+
+          <form id="booking-form">
+            <div class="form-group">
+              <label for="nome">Nome e Cognome *</label>
+              <input type="text" id="nome" name="nome" class="form-input" placeholder="Mario Rossi" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email aziendale *</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="nome@azienda.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="azienda">Azienda *</label>
+              <input type="text" id="azienda" name="azienda" class="form-input" placeholder="Nome azienda" required>
+            </div>
+
+            <div class="form-group">
+              <label for="settore">Area di interesse *</label>
+              <select id="settore" name="settore" required>
+                <option value="">Seleziona un'area...</option>
+                <option value="energy">Energia e efficienza energetica</option>
+                <option value="circular">Economia circolare e risorse idriche</option>
+                <option value="climate">Gestione rischio climatico</option>
+                <option value="agrifood">Agricoltura e food</option>
+                <option value="cultural">Turismo e patrimonio culturale</option>
+                <option value="health">Salute e nutraceutica</option>
+                <option value="all">Piu aree / Panoramica generale</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-accent btn-lg btn-block" style="margin-top: var(--space-md);">
+              Prenota la call
+              <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </button>
+
+            <p class="form-privacy">
+              Inviando accetti la <a href="#">Privacy Policy</a>. Niente spam, solo contenuti rilevanti.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       TRUST LOGOS
+       ======================================== -->
+  <section class="trust-logos" style="padding: var(--space-lg) 0; overflow: hidden;">
+    <div style="width: 90vw; margin: 0 auto;">
+      <p class="trust-label" style="text-align: center; margin-bottom: var(--space-md);">Un ecosistema supportato da</p>
+      <div class="logo-carousel" style="width: 100%; max-width: none;">
+        <div class="logo-track track-1">
+          <!-- Universita e Centri di Ricerca -->
+          <img src="images/unical.png" alt="UNICAL" class="partner-logo">
+          <img src="images/unibas.png" alt="UNIBAS" class="partner-logo">
+          <img src="images/unirc.png" alt="UNIRC" class="partner-logo">
+          <img src="images/unizc.png" alt="UNICZ" class="partner-logo">
+          <img src="images/cnr.png" alt="CNR" class="partner-logo">
+          <img src="images/crea.png" alt="CREA" class="partner-logo">
+          <img src="images/arpacal.png" alt="ARPACAL" class="partner-logo">
+          <!-- Istituzioni -->
+          <img src="images/regione_calabria.png" alt="Regione Calabria" class="partner-logo">
+          <img src="images/logo-abdam.png" alt="ABDAM" class="partner-logo">
+          <img src="images/parco_nazionale_sila.png" alt="Parco Nazionale della Sila" class="partner-logo">
+          <img src="images/parco_nazionale_pollino.png" alt="Parco Nazionale del Pollino" class="partner-logo">
+          <img src="images/microcredito.png" alt="Ente Nazionale Microcredito" class="partner-logo">
+          <img src="images/forum_terzo_settore.png" alt="Forum Terzo Settore" class="partner-logo">
+          <!-- Partner Industriali -->
+          <img src="images/tim.png" alt="TIM" class="partner-logo">
+          <img src="images/engineering.png" alt="Engineering" class="partner-logo">
+          <img src="images/nttdata.png" alt="NTT Data" class="partner-logo">
+          <img src="images/rina.png" alt="RINA" class="partner-logo">
+          <img src="images/eit.png" alt="EIT Manufacturing" class="partner-logo">
+          <img src="images/biotechmed.png" alt="BioTecnoMed" class="partner-logo">
+          <img src="images/techfem.png" alt="TechFem" class="partner-logo">
+          <img src="images/epitech.png" alt="Epitech" class="partner-logo">
+          <img src="images/entopan.png" alt="Entopan" class="partner-logo">
+          <!-- Duplicate per loop continuo -->
+          <img src="images/unical.png" alt="UNICAL" class="partner-logo">
+          <img src="images/unibas.png" alt="UNIBAS" class="partner-logo">
+          <img src="images/unirc.png" alt="UNIRC" class="partner-logo">
+          <img src="images/unizc.png" alt="UNICZ" class="partner-logo">
+          <img src="images/cnr.png" alt="CNR" class="partner-logo">
+          <img src="images/crea.png" alt="CREA" class="partner-logo">
+          <img src="images/arpacal.png" alt="ARPACAL" class="partner-logo">
+          <img src="images/regione_calabria.png" alt="Regione Calabria" class="partner-logo">
+          <img src="images/logo-abdam.png" alt="ABDAM" class="partner-logo">
+          <img src="images/parco_nazionale_sila.png" alt="Parco Nazionale della Sila" class="partner-logo">
+          <img src="images/parco_nazionale_pollino.png" alt="Parco Nazionale del Pollino" class="partner-logo">
+          <img src="images/microcredito.png" alt="Ente Nazionale Microcredito" class="partner-logo">
+          <img src="images/forum_terzo_settore.png" alt="Forum Terzo Settore" class="partner-logo">
+          <img src="images/tim.png" alt="TIM" class="partner-logo">
+          <img src="images/engineering.png" alt="Engineering" class="partner-logo">
+          <img src="images/nttdata.png" alt="NTT Data" class="partner-logo">
+          <img src="images/rina.png" alt="RINA" class="partner-logo">
+          <img src="images/eit.png" alt="EIT Manufacturing" class="partner-logo">
+          <img src="images/biotechmed.png" alt="BioTecnoMed" class="partner-logo">
+          <img src="images/techfem.png" alt="TechFem" class="partner-logo">
+          <img src="images/epitech.png" alt="Epitech" class="partner-logo">
+          <img src="images/entopan.png" alt="Entopan" class="partner-logo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       HOW IT WORKS
+       ======================================== -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="how-it-works-header">
+        <h2>Come funziona</h2>
+        <p class="text-muted">Un percorso semplice per accedere a tecnologie validate e finanziamenti</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card animate-fade-in stagger-1">
+          <div class="step-number">1</div>
+          <h4>Call Discovery</h4>
+          <p>Analizziamo insieme le tue esigenze di innovazione e identifichiamo le tecnologie piu adatte al tuo settore.</p>
+          <span class="step-duration">30 min</span>
+        </div>
+
+        <div class="step-card animate-fade-in stagger-2">
+          <div class="step-number">2</div>
+          <h4>Assessment Tecnologico</h4>
+          <p>Ti presentiamo le soluzioni TRL 6-9 rilevanti con il nostro team scientifico. Valutiamo insieme la fattibilita.</p>
+          <span class="step-duration">Gratuito</span>
+        </div>
+
+        <div class="step-card animate-fade-in stagger-3">
+          <div class="step-number">3</div>
+          <h4>PoC e Partnership</h4>
+          <p>Avvio del Proof of Concept nel tuo contesto aziendale. Accesso prioritario ai fondi PNRR per co-finanziare il progetto.</p>
+          <span class="step-duration">Rischio condiviso</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       BENEFITS / WHY TECH4YOU
+       ======================================== -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits-header">
+        <h2>Cosa abbiamo gia fatto per te</h2>
+        <p class="text-muted">4 anni di lavoro che la tua azienda puo sfruttare da subito.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card animate-fade-in stagger-1">
+          <div class="benefit-icon">🔬</div>
+          <div class="benefit-content">
+            <h4>R&D gia completato</h4>
+            <p>Abbiamo sviluppato 120 tecnologie in 4 anni con €110M di investimento PNRR. Tu accedi ai risultati, non al processo.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card animate-fade-in stagger-2">
+          <div class="benefit-icon">👥</div>
+          <div class="benefit-content">
+            <h4>Team gia formato</h4>
+            <p>433 ricercatori con competenze specifiche in climate tech, gia operativi. Non devi cercarli, formarli o pagarli.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card animate-fade-in stagger-3">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-content">
+            <h4>Fondi gia disponibili</h4>
+            <p>€22M+ di bandi a cascata per co-finanziare i PoC. Senza un partner accademico come Tech4You, questi fondi PNRR non sono accessibili.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card animate-fade-in stagger-4">
+          <div class="benefit-icon">✓</div>
+          <div class="benefit-content">
+            <h4>Validazione gia fatta</h4>
+            <p>TRL 6-9 significa tecnologie testate in ambiente operativo. Non prototipi sperimentali, ma soluzioni pronte per il test industriale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SOCIAL PROOF COMPACT
+       ======================================== -->
+  <section class="social-proof" style="padding: var(--space-xl) 0; background: var(--light);">
+    <div class="container">
+      <div class="social-proof-header" style="margin-bottom: var(--space-lg);">
+        <h2>110M€ gia investiti. 93 imprese attive nell'ecosistema.</h2>
+        <p class="text-muted">Un network che include le principali universita e centri di ricerca del Sud Italia</p>
+      </div>
+
+      <div class="proof-bar-grid" style="max-width: 800px; margin: 0 auto;">
+        <div class="proof-item">
+          <div class="proof-number">120+</div>
+          <div class="proof-label">Prototipi TRL 6-9</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">433</div>
+          <div class="proof-label">Ricercatori</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">€22M+</div>
+          <div class="proof-label">Bandi a cascata</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">14</div>
+          <div class="proof-label">Soci istituzionali</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FINAL CTA
+       ======================================== -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>93 imprese stanno gia lavorando con noi.</h2>
+      <p>Abbiamo fatto il lavoro di R&D. Abbiamo i fondi. Abbiamo il team. Una call per capire come la tua azienda puo sfruttarli.</p>
+      <a href="#prenota-call" class="btn btn-primary btn-lg">
+        Prenota la call
+        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 45px; filter: brightness(1.2);">
+        </div>
+        <div class="footer-institutional">
+          <img src="images/loghi-istituzionali.png" alt="Partner istituzionali - PNRR, NextGenerationEU, CNR, Universita" style="height: 40px; filter: brightness(1.3);">
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Contatti</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tech4You S.c.a.r.l. - Ecosistema dell'Innovazione Sostenibile</p>
+        <p>Via P. Bucci, snc - 87036 Rende (CS), Italia</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <script>
+    // Form submission
+    document.getElementById('booking-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Collect form data
+      const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        azienda: document.getElementById('azienda').value,
+        settore: document.getElementById('settore').value
+      };
+
+      // Validate email (block personal emails)
+      const personalDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'libero.it', 'icloud.com'];
+      const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+
+      if (personalDomains.includes(emailDomain)) {
+        alert('Per favore inserisci un\'email aziendale');
+        return;
+      }
+
+      // Store data
+      localStorage.setItem('t4y_booking', JSON.stringify(formData));
+
+      // Here you would typically:
+      // 1. Send to your CRM/backend
+      // 2. Redirect to Calendly or booking page
+      // 3. Show confirmation
+
+      // For now, redirect to a thank you page or show confirmation
+      alert('Grazie ' + formData.nome.split(' ')[0] + '! Ti contatteremo a breve per fissare la call.');
+
+      // Optional: redirect to calendly or thank you page
+      // window.location.href = 'https://calendly.com/tech4you/discovery-call';
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Track form interactions (placeholder for analytics)
+    document.querySelectorAll('#booking-form input, #booking-form select').forEach(input => {
+      input.addEventListener('focus', function() {
+        console.log('Form field focused:', this.name);
+        // gtag('event', 'form_field_focus', { field: this.name });
+      });
+    });
+  </script>
+
+</body>
+</html>

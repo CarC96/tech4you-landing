@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tech4You - Scopri le tecnologie per il tuo settore. Sfide industriali risolte con prototipi TRL 6-9.">
+  <title>Tech4You | Tecnologie per il tuo settore</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* Page-specific styles */
+    .page-header {
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%);
+      color: var(--white);
+      padding: 120px 0 60px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .footer-institutional {
+      display: flex;
+      justify-content: center;
+      margin: var(--space-md) 0;
+    }
+
+    .page-header p {
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cluster-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(255,255,255,0.15);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+    }
+
+    .cluster-tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+      padding: var(--space-md) 0;
+      background: var(--light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cluster-tab {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all var(--transition-fast);
+      color: var(--dark);
+    }
+
+    .cluster-tab:hover {
+      border-color: #0098bb;
+      color: #0098bb;
+    }
+
+    .cluster-tab.active {
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%);
+      border-color: #07667A;
+      color: var(--white);
+    }
+
+    .sfide-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .sfide-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .cluster-content {
+      display: none;
+    }
+
+    .cluster-content.active {
+      display: block;
+    }
+
+    .cta-section {
+      background: var(--light);
+      padding: var(--space-xxl) 0;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta-features {
+      list-style: none;
+    }
+
+    /* === DYNAMIC TECH GRID === */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: var(--space-lg);
+      padding: var(--space-lg) 0;
+    }
+
+    .tech-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tech-card:hover {
+      border-color: #0098bb;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+
+    .tech-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .tech-tipo-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tech-nome {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+      flex: 1;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .trl-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-xl);
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .trl-9 { background: #10b981; color: white; }
+    .trl-8 { background: #3b82f6; color: white; }
+    .trl-7 { background: #6366f1; color: white; }
+    .trl-6 { background: #8b5cf6; color: white; }
+    .trl-5 { background: #a855f7; color: white; }
+    .trl-null { background: #9ca3af; color: white; }
+
+    .tech-desc {
+      font-size: 0.875rem;
+      color: var(--dark-soft);
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+      flex: 1;
+    }
+
+    .tech-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+
+    .meta-tag {
+      background: var(--light);
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      color: var(--dark-soft);
+    }
+
+    .btn-details {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #0098bb;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .btn-details:hover {
+      background: #0098bb;
+      border-color: #0098bb;
+      color: var(--white);
+    }
+
+    /* === LOADING & ERROR STATES === */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xxl);
+      color: var(--dark-soft);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: #0098bb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: var(--space-md);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-state {
+      text-align: center;
+      padding: var(--space-xxl);
+      color: #ef4444;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--space-xxl);
+      color: var(--dark-soft);
+    }
+
+    /* === MODAL CTA === */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      max-width: 480px;
+      width: 100%;
+      padding: var(--space-xl);
+      position: relative;
+      text-align: center;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--dark-soft);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    .modal-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: var(--space-sm);
+    }
+
+    .modal-tech-name {
+      font-size: 0.9rem;
+      color: #0098bb;
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+      padding: var(--space-sm) var(--space-md);
+      background: rgba(0, 152, 187, 0.1);
+      border-radius: var(--radius-md);
+      display: inline-block;
+    }
+
+    .modal-text {
+      font-size: 1rem;
+      color: var(--dark-soft);
+      margin-bottom: var(--space-lg);
+      line-height: 1.6;
+    }
+
+    .modal-cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #07667A 0%, #0098bb 100%);
+      color: var(--white);
+      padding: var(--space-md) var(--space-xl);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      border: none;
+      cursor: pointer;
+    }
+
+    .modal-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(7, 102, 122, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-group {
+        justify-content: space-between;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .cluster-stats {
+        gap: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="landing-step1.html" class="navbar-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 40px;">
+        </a>
+        <a href="#cta-section" class="btn btn-dark">Prenota Assessment</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================
+       PAGE HEADER
+       ======================================== -->
+  <header class="page-header">
+    <div class="container">
+      <div class="cluster-badge" id="cluster-badge">
+        <span id="cluster-icon">⚡</span>
+        <span id="cluster-name">Energy</span>
+      </div>
+      <h1 id="page-title">Esplora le tecnologie che possono trasformare la tua azienda</h1>
+      <p id="page-subtitle">120 soluzioni sviluppate da 433 ricercatori, €110M già investiti dal PNRR. Scopri come creare valore concreto per il tuo business.</p>
+    </div>
+  </header>
+
+  <!-- ========================================
+       CLUSTER TABS
+       ======================================== -->
+  <div class="cluster-tabs">
+    <button class="cluster-tab active" data-cluster="energy">⚡ Energy</button>
+    <button class="cluster-tab" data-cluster="circular">♻️ Circular</button>
+    <button class="cluster-tab" data-cluster="climate">🌍 Climate</button>
+    <button class="cluster-tab" data-cluster="agrifood">🌾 AgriFood</button>
+    <button class="cluster-tab" data-cluster="cultural">🏛️ Cultural</button>
+    <button class="cluster-tab" data-cluster="health">🧬 Health</button>
+  </div>
+
+  <!-- ========================================
+       TECNOLOGIE SECTION (DYNAMIC)
+       ======================================== -->
+  <section class="sfide-section">
+    <div class="container">
+
+      <!-- Tech Grid Container -->
+      <div id="tech-container">
+        <div class="loading-state" id="loading-state">
+          <div class="spinner"></div>
+          <p>Caricamento tecnologie...</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal CTA -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-icon">🚀</div>
+      <h3 class="modal-title">Scopri come Tech4You può creare valore per la tua azienda</h3>
+      <div class="modal-tech-name" id="modal-tech-name"></div>
+      <p class="modal-text">
+        I nostri esperti possono guidarti nel percorso di trasferimento tecnologico, dall'assessment iniziale all'integrazione completa.
+      </p>
+      <button class="modal-cta-btn" onclick="goToCta()">
+        Trasforma queste tecnologie in valore per la tua azienda
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================
+       CTA SECTION
+       ======================================== -->
+  <section class="cta-section" id="cta-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2>Trasforma queste tecnologie in valore per la tua azienda</h2>
+        <p class="text-muted">I nostri esperti ti guidano nel percorso di trasferimento tecnologico, dall'assessment all'integrazione</p>
+      </div>
+
+      <div class="cta-grid">
+        <!-- Assessment CTA -->
+        <div class="cta-box featured">
+          <div class="cta-icon">🎯</div>
+          <h3>Inizia con una call conoscitiva</h3>
+          <p class="subtitle">10 minuti per capire come Tech4You può supportarti</p>
+          <ul class="cta-features">
+            <li>Parliamo delle tue sfide e obiettivi</li>
+            <li>Ti presentiamo le tecnologie più rilevanti</li>
+            <li>Valutiamo insieme i percorsi di collaborazione</li>
+            <li>Nessun impegno, solo valore</li>
+          </ul>
+          <p style="font-size: 0.875rem; color: var(--dark-soft); margin-bottom: var(--space-md);">
+            <strong>10 minuti</strong> | Gratuito | Senza impegno
+          </p>
+          <a href="#" class="btn btn-dark btn-lg btn-block" id="cta-assessment">
+            Prenota la tua call
+          </a>
+        </div>
+
+        <!-- Event Info Banner -->
+        <div class="cta-box" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 1px solid #dee2e6;">
+          <div class="cta-icon">📅</div>
+          <h3 style="font-size: 1.1rem;">Climate Innovation Day</h3>
+          <p class="subtitle" style="margin-bottom: var(--space-sm);">Milano Bicocca | Fine Febbraio 2026</p>
+          <p style="font-size: 0.875rem; color: var(--dark-soft); margin: 0;">
+            Chi completa l'assessment avrà <strong>accesso prioritario</strong> all'evento con demo live e speed matching.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/logo-t4y-1.png" alt="Tech4You" style="height: 45px; filter: brightness(1.2);">
+        </div>
+        <div class="footer-institutional">
+          <img src="images/loghi-istituzionali.png" alt="Partner istituzionali - PNRR, NextGenerationEU, CNR, Università" style="height: 40px; filter: brightness(1.3);">
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Contatti</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tech4You S.c.a.r.l. - Ecosistema dell'Innovazione Sostenibile</p>
+        <p>Via P. Bucci, snc - 87036 Rende (CS), Italia</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <script>
+    // ==========================================
+    // SUPABASE CONFIGURATION
+    // ==========================================
+    const SUPABASE_URL = 'https://jfcwreeugwpkjywhahqn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmY3dyZWV1Z3dwa2p5d2hhaHFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4ODA0ODgsImV4cCI6MjA4MzQ1NjQ4OH0.n2QbBclTbKNcUg7ZB73_SbF5HkA37z3O7QhQ4g_kp0M';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ==========================================
+    // CLUSTER DATA
+    // ==========================================
+    const clusterData = {
+      energy: { icon: '⚡', name: 'Energy', fullName: 'Energia & Efficienza', dbName: 'Energy' },
+      circular: { icon: '♻️', name: 'Circular', fullName: 'Economia Circolare & Blue', dbName: 'Circular' },
+      climate: { icon: '🌍', name: 'Climate', fullName: 'Clima & Rischio Territoriale', dbName: 'Climate' },
+      agrifood: { icon: '🌾', name: 'AgriFood', fullName: 'Precision Farming & Food', dbName: 'AgriFood' },
+      cultural: { icon: '🏛️', name: 'Cultural', fullName: 'Patrimonio Culturale', dbName: 'Cultural' },
+      health: { icon: '🧬', name: 'Health', fullName: 'Salute & Benessere', dbName: 'Health' }
+    };
+
+    // ==========================================
+    // STATE
+    // ==========================================
+    let currentCluster = 'energy';
+    let allTecnologie = [];
+
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
+    function getTipoIcon(tipo) {
+      if (!tipo) return '📦';
+      const t = tipo.toLowerCase();
+      if (t.includes('software')) return '💻';
+      if (t.includes('physical')) return '🔧';
+      if (t.includes('algorithm')) return '🧮';
+      if (t.includes('platform')) return '🌐';
+      if (t.includes('iot')) return '📡';
+      if (t.includes('app')) return '📱';
+      if (t.includes('database')) return '🗄️';
+      if (t.includes('protocol')) return '📋';
+      if (t.includes('video')) return '🎬';
+      return '📦';
+    }
+
+    function truncate(text, max) {
+      if (!text) return '';
+      return text.length > max ? text.substring(0, max) + '...' : text;
+    }
+
+    function capitalizeFirst(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    // ==========================================
+    // LOAD DATA FROM SUPABASE
+    // ==========================================
+    async function loadTecnologie(cluster) {
+      showLoading(true);
+
+      const dbCluster = clusterData[cluster]?.dbName || capitalizeFirst(cluster);
+
+      const { data, error } = await supabaseClient
+        .from('tecnologie')
+        .select('*')
+        .eq('cluster', dbCluster)
+        .order('trl', { ascending: false, nullsFirst: false });
+
+      if (error) {
+        console.error('Errore caricamento:', error);
+        showError('Impossibile caricare le tecnologie. Riprova più tardi.');
+        return;
+      }
+
+      allTecnologie = data || [];
+      renderTecnologie();
+      showLoading(false);
+    }
+
+    // ==========================================
+    // RENDER TECH CARDS
+    // ==========================================
+    function renderTecnologie() {
+      const container = document.getElementById('tech-container');
+
+      if (allTecnologie.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>Nessuna tecnologia disponibile per questo cluster.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const html = `
+        <div class="tech-grid">
+          ${allTecnologie.map(tech => renderTechCard(tech)).join('')}
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function renderTechCard(tech) {
+      const tipoIcon = getTipoIcon(tech.tipo_dimostratore);
+      const desc = truncate(tech.descrizione_estesa, 180);
+      const trlClass = tech.trl ? `trl-${tech.trl}` : 'trl-null';
+      const trlText = tech.trl ? `TRL ${tech.trl}` : 'TRL N/D';
+
+      return `
+        <div class="tech-card" data-demo-id="${tech.demo_id || ''}">
+          <div class="tech-header">
+            <span class="tech-tipo-icon">${tipoIcon}</span>
+            <h3 class="tech-nome">${tech.nome || 'Nome non disponibile'}</h3>
+            <span class="trl-badge ${trlClass}">${trlText}</span>
+          </div>
+          <p class="tech-desc">${desc || 'Descrizione non disponibile'}</p>
+          <div class="tech-meta">
+            ${tech.tipo_dimostratore ? `<span class="meta-tag">${tech.tipo_dimostratore}</span>` : ''}
+            ${tech.pp_original ? `<span class="meta-tag">${tech.pp_original}</span>` : ''}
+            ${tech.spoke ? `<span class="meta-tag">Spoke ${tech.spoke}</span>` : ''}
+          </div>
+          <button class="btn-details" onclick="selectTech('${encodeURIComponent(tech.nome || '')}')">
+            Scopri di più →
+          </button>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // MODAL FUNCTIONS
+    // ==========================================
+    function selectTech(techName) {
+      // Update URL with tech parameter
+      const url = new URL(window.location);
+      url.searchParams.set('tech', techName);
+      window.history.pushState({}, '', url);
+
+      // Show tech name in modal
+      document.getElementById('modal-tech-name').textContent = decodeURIComponent(techName);
+
+      // Open modal
+      document.getElementById('modal-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Dispatch custom event
+      window.dispatchEvent(new CustomEvent('techSelected', {
+        detail: { tech: techName, cluster: currentCluster }
+      }));
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function goToCta() {
+      closeModal();
+      const ctaSection = document.getElementById('cta-section');
+      if (ctaSection) {
+        ctaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // ==========================================
+    // UI HELPERS
+    // ==========================================
+    function showLoading(show) {
+      const container = document.getElementById('tech-container');
+      if (show) {
+        container.innerHTML = `
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Caricamento tecnologie...</p>
+          </div>
+        `;
+      }
+    }
+
+    function showError(message) {
+      const container = document.getElementById('tech-container');
+      container.innerHTML = `
+        <div class="error-state">
+          <p>${message}</p>
+          <button onclick="loadTecnologie(currentCluster)" class="btn btn-dark" style="margin-top: var(--space-md);">
+            Riprova
+          </button>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // CLUSTER SWITCH
+    // ==========================================
+    function getInitialCluster() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const clusterFromUrl = urlParams.get('cluster');
+
+      if (clusterFromUrl && clusterData[clusterFromUrl]) {
+        return clusterFromUrl;
+      }
+
+      const formData = JSON.parse(localStorage.getItem('t4y_formData') || '{}');
+      if (formData.area && clusterData[formData.area]) {
+        return formData.area;
+      }
+
+      return 'energy';
+    }
+
+    async function switchCluster(cluster) {
+      currentCluster = cluster;
+
+      // Update tabs
+      document.querySelectorAll('.cluster-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.cluster === cluster);
+      });
+
+      // Update header
+      const data = clusterData[cluster];
+      document.getElementById('cluster-icon').textContent = data.icon;
+      document.getElementById('cluster-name').textContent = data.name;
+
+      // Update URL
+      const url = new URL(window.location);
+      url.searchParams.set('cluster', cluster);
+      window.history.replaceState({}, '', url);
+
+      // Load data
+      await loadTecnologie(cluster);
+
+      // Update subtitle with count
+      document.getElementById('page-subtitle').textContent =
+        `${allTecnologie.length} tecnologie innovative pronte per test e trasferimento | ${data.fullName}`;
+    }
+
+    // ==========================================
+    // INITIALIZE
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', async function() {
+      const initialCluster = getInitialCluster();
+
+      // Tab click handlers
+      document.querySelectorAll('.cluster-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          switchCluster(this.dataset.cluster);
+        });
+      });
+
+      // Modal close on overlay click
+      document.getElementById('modal-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+
+      // Modal close on Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // CTA click handler
+      const ctaBtn = document.getElementById('cta-assessment');
+      if (ctaBtn) {
+        ctaBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          alert('Funzionalità prenotazione in arrivo - contattaci a info@tech4you.it');
+        });
+      }
+
+      // Load initial cluster
+      await switchCluster(initialCluster);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
